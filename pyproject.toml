@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "the stig"
+version = "0.1.0"
+description = "Self-Hosted Vehicle Tracking"
+authors = ["Karl Wooster <karl@woostertech.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^5.1.4"
+django-allauth = "^65.3.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.2"
+deptry = "^0.21.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

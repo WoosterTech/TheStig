@@ -1,8 +1,66 @@
+exclude: '^docs/|/migrations/|devcontainer.json'
+default_stages: [pre-commit]
+
 repos:
-- hooks:
-  - id: commitizen
-  - id: commitizen-branch
-    stages:
-    - pre-push
-  repo: https://github.com/commitizen-tools/commitizen
-  rev: v4.1.0
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      # - id: check-json # This hook is not compatible with json5
+      - id: check-toml
+      - id: check-xml
+      - id: check-yaml
+      - id: debug-statements
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: detect-private-key
+
+  - repo: https://gitlab.com/bmares/check-json5
+    rev: v1.0.0
+    hooks:
+    - id: check-json5
+
+  # Run the Ruff linter.
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.2
+    hooks:
+      # Linter
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      # Formatter
+      - id: ruff-format
+
+  - repo: https://github.com/adamchainz/django-upgrade
+    rev: '1.22.2'
+    hooks:
+      - id: django-upgrade
+        args: ['--target-version', '5.1']
+
+  - repo: https://github.com/Riverside-Healthcare/djLint
+    rev: v1.36.3
+    hooks:
+      - id: djlint-reformat-django
+      - id: djlint-django
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.1.0
+    hooks:
+      - id: commitizen
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.19.0
+    hooks:
+    - id: pyupgrade
+      args: [--py3-plus,--py36-plus,--py37-plus,--py38-plus,--py39-plus,--py310-plus,--py311-plus]
+
+  - repo: https://github.com/fpgmaas/deptry.git
+    rev: "0.21.1"
+    hooks:
+      - id: deptry
+  - repo: https://github.com/python-poetry/poetry
+    # !!!poetry rev doesn't follow proper format, manually set after autoupdate!!!
+    rev: '1.8.5'
+    hooks:
+    - id: poetry-check
+    - id: poetry-lock
+      args: [--no-update]

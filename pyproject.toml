@@ -5,11 +5,24 @@ description = "Self-Hosted Vehicle Tracking"
 authors = ["Karl Wooster <karl@woostertech.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [
+    {include = "the_stig", from = "."},
+]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 django = "^5.1.4"
-django-allauth = "^65.3.0"
+# django-allauth = {extras = ["mfa"], version = "^65.3.0"}
+# django-anymail = {extras = ["brevo"], version = "^12.0"}
+# whitenoise = "^6.8.2"
+# pydantic = "^2.10.3"
+# typeid-python = "^0.3.1"
+# django-environ = "^0.11.2"
+# sentry-sdk = "^2.19.2"
+# django-rubble = {git = "https://github.com/WoosterTech/django-rubble.git", extras = ["history"]}
+
+[tool.poetry.group.dev]
+optional = true
 
 
 [tool.poetry.group.dev.dependencies]
@@ -17,7 +30,24 @@ ruff = "^0.8.2"
 deptry = "^0.21.1"
 commitizen = "^4.1.0"
 pre-commit = "^4.0.1"
+django-stubs = {extras = ["compatible-mypy"], version = "^5.1.1"}
+django-debug-toolbar = "^4.4.6"
 
+[tool.poetry.group.test]
+optional = true
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.4"
+pytest-sugar = "^1.0.0"
+pytest-django = "^4.9.0"
+django-coverage-plugin = "^3.1.0"
+
+# [tool.deptry.package_module_name_map]
+# django-environ = "environ"  # TODO: ummm....
+
+[tool.deptry.per_rule_ignores]
+DEP001 = ["environ"]  # TODO: investigate cause
 
 [tool.commitizen]
 name = "cz_conventional_commits"
@@ -26,6 +56,7 @@ version_scheme = "pep440"
 version_provider = "poetry"
 update_changelog_on_bump = true
 major_version_zero = true
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
